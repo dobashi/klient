@@ -1,10 +1,9 @@
-package com.exwzd.dia.common.http.client
+package com.lavans.klient
 
-import com.exwzd.dia.common.Logger
+import com.lavans.klient.Logger
 import java.io.PrintStream
 import java.net.HttpURLConnection
 import java.util.zip.GZIPInputStream
-import javax.servlet.http.Cookie
 
 /**
  * HttpClient.get("https://www.google.com").asString()
@@ -18,11 +17,15 @@ class HttpClient() {
     private val log = Logger.getLogger(this)
 //    private val cookie: Cookie
 
-    fun get(request: HttpRequest): HttpResponse = request(Method.GET, request)
+    fun get(request: HttpRequest): HttpResponse = request(
+        Method.GET, request)
 
-    fun post(request: HttpRequest): HttpResponse = request(Method.POST, request)
-    fun put(request: HttpRequest): HttpResponse = request(Method.PUT, request)
-    fun delete(request: HttpRequest): HttpResponse = request(Method.DELETE, request)
+    fun post(request: HttpRequest): HttpResponse = request(
+        Method.POST, request)
+    fun put(request: HttpRequest): HttpResponse = request(
+        Method.PUT, request)
+    fun delete(request: HttpRequest): HttpResponse = request(
+        Method.DELETE, request)
 
     private fun request(method: Method, request: HttpRequest): HttpResponse {
         log.debug("Request\n$method ${request.url}\n${request.headers}")
@@ -37,7 +40,12 @@ class HttpClient() {
             }
         }
         val res = stream(con).use { input ->
-            HttpResponse(con.responseCode, con.responseMessage, con.headerFields, input.readAllBytes())
+            HttpResponse(
+                con.responseCode,
+                con.responseMessage,
+                con.headerFields,
+                input.readAllBytes()
+            )
         }
         log.debug("Response $res")
         return res
@@ -47,8 +55,10 @@ class HttpClient() {
         con.requestMethod = method.name
         request.headers.forEach { e -> con.setRequestProperty(e._1, e._2) }
         con.doOutput = method.hasOutput()
-        con.connectTimeout = timeout
-        con.readTimeout = timeout
+        con.connectTimeout =
+            timeout
+        con.readTimeout =
+            timeout
         con.connect()
     }
 
@@ -57,7 +67,8 @@ class HttpClient() {
 
     companion object {
         var timeout: Int = 2000 // milliseconds
-        fun get(s: String): String = HttpClient().get(HttpRequest(s)).asString()
+        fun get(s: String): String = HttpClient()
+            .get(HttpRequest(s)).asString()
     }
 }
 

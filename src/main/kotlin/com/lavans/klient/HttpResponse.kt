@@ -1,10 +1,5 @@
-package com.exwzd.dia.common.http.client
+package com.lavans.klient
 
-import com.exwzd.dia.common.http.Mime
-import com.exwzd.dia.common.lang.KList
-import com.exwzd.dia.common.lang.KMap
-import com.exwzd.dia.common.lang.MultiMap
-import com.exwzd.dia.common.lang.vavrEmptyMap
 import io.vavr.Tuple2
 import io.vavr.collection.List
 import java.nio.charset.Charset
